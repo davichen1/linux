@@ -1,2 +1,0 @@
-# linux
-for linux ideas
