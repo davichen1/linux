@@ -1,0 +1,86 @@
+How to set up an sstp vpn connection?
+
+up vote
+5
+down vote
+favorite
+3
+the question is simple: how to set up an sstp vpn connection in ubuntu 11.04?
+as of this moment I haven't been able to find a way to make an sstp vpn connection.
+
+vpn
+shareimprove this question
+edited Dec 23 '11 at 16:48
+asked Sep 30 '11 at 13:37
+
+Hamed Momeni
+90181426
+  	 	
+I've just found sstp-client, I haven't test yet, but it may help :) – Behzadsh Sep 30 '11 at 19:51
+  	 	
+thanks, I'll give it a try. – Hamed Momeni Oct 1 '11 at 6:30
+add a comment
+2 Answers
+active oldest votes
+up vote
+3
+down vote
+accepted
+You can give a try as described here, installing by yourself two programs, sstp-client and its network-manager support:
+
+https://serverfault.com/questions/256180/ubuntu-connect-to-sstp-vpn
+
+shareimprove this answer
+edited Apr 13 at 12:14
+
+Community♦
+1
+answered Dec 23 '11 at 15:26
+
+heiko81
+1,82011020
+add a comment
+up vote
+4
+down vote
+For Ubuntu Desktop 14.04 LTS: manual install (dpkg -i *.deb) packages downloaded from here:
+
+libsstp-client0_1.0.10-0ubuntu3_amd64.deb
+sstp-client_1.0.10-0ubuntu3_amd64.deb
+network-manager-sstp_0.9.8.8-0ubuntu1_amd64.deb
+network-manager-sstp-gnome_0.9.8.8-0ubuntu1_amd64.deb
+For Ubuntu Desktop Linux 15.04 (Vivid Vervet) 64-bits:
+
+libsstp-client0_1.0.10-0ubuntu3_amd64.deb
+sstp-client_1.0.10-0ubuntu3_amd64.deb
+network-manager-sstp_0.9.10.0-0ubuntu3_amd64.deb
+network-manager-sstp-gnome_0.9.10.0-0ubuntu3_amd64.deb
+For Ubuntu Desktop Linux 15.10 (Wily Werewolf) 64-bits:
+
+libsstp-client0_1.0.10-0ubuntu4_amd64.deb
+sstp-client_1.0.10-0ubuntu4_amd64.deb
+network-manager-sstp_0.9.10.0-0ubuntu4_amd64.deb
+network-manager-sstp-gnome_0.9.10.0-0ubuntu4_amd64.deb
+For Ubuntu Desktop Linux 16.04 (Xenial Xerus) LTS 64-bits:
+
+libsstp-client0_1.0.10-0ubuntu6_amd64.deb
+sstp-client_1.0.10-0ubuntu6_amd64.deb
+network-manager-sstp_1.2.0-0ubuntu2_amd64.deb
+network-manager-sstp-gnome_1.2.0-0ubuntu2_amd64.deb
+https://launchpad.net/~eivnaes/+archive/ubuntu/network-manager-sstp/+packages?field.name_filter=&field.status_filter=published&field.series_filter=xenial
+
+Also: packages can be installed from this PPA
+
+Sources:
+
+How to set up an sstp vpn connection in Ubuntu Desktop 14.04 LTS:
+
+https://wiki.it-kb.ru/unix-linux/ubuntu/ubuntu-14-04-lts-trusty-tahr/how-to-install-sstp-vpn-on-ubuntu-desktop-linux-14-04-lts-64-bits
+
+How to set up an sstp vpn connection in Ubuntu Desktop 15.04 and 15.10:
+
+https://wiki.it-kb.ru/unix-linux/ubuntu/ubuntu-15-04-vivid-vervet/how-to-setup-vpn-sstp-client-and-network-manager-on-ubuntu-desktop-linux-15-04-vivid-or-15-10-wily
+
+How to set up an sstp vpn connection in Ubuntu Desktop 16.04 LTS:
+
+https://wiki.it-kb.ru/unix-linux/ubuntu/ubuntu-16-04-xenial-xerus-lts/how-to-setup-vpn-sstp-client-and-network-manager-on-ubuntu-desktop-linux-16-04-xenial-xerus-lts
