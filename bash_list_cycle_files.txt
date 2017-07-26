@@ -1,0 +1,5 @@
+
+
+put the following in .bashrc or .bash_login
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
