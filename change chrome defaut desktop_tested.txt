@@ -1,0 +1,150 @@
+1 Change default resolution:
+
+Setting the resolution of the virtual desktop
+By default, the system will create a virtual desktop that is 3840x1600 pixels in size. To change this, add this line to your ~/.profile script:
+
+export CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=1600x1200
+
+(replacing 1600x1200 with your preferred size).
+
+If the session is already running, you will need to restart it for this setting to take effect:
+
+sudo /etc/init.d/chrome-remote-desktop stop
+
+sudo /etc/init.d/chrome-remote-desktop start
+
+
+2, change default desktop session.
+
+ Create a virtual desktop session
+
+Look in /usr/share/xsessions/ for the .desktop file for your preferred desktop environment.
+For example, Cinnamon has a file named "cinnamon.desktop" with the following command: gnome-session --session=cinnamon
+Create a file called .chrome-remote-desktop-session in your home directory with the following content:
+exec /usr/sbin/lightdm-session "<YOUR_EXEC_COMMAND>"
+Replace <YOUR_EXEC_COMMAND> with the command at the end of your .desktop file:
+In the example for Cinnamon, the correct command is exec /usr/sbin/lightdm-session 'gnome-session --session=cinnamon'
+Unity desktops require some additional code. The full command is DESKTOP_SESSION=ubuntu XDG_CURRENT_DESKTOP=Unity XDG_RUNTIME_DIR=/run/user/$(id -u) exec /usr/sbin/lightdm-session 'gnome-session --session=ubuntu'
+Save the file called ".chrome-remote-desktop-session"​.
+
+#Above worked for Ubuntu 16.04 with ubity and cinnamon installed, with some minor changes. See below:
+konglab@SOP-1163:~$ cat .profile 
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin directories
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=1920x1080
+konglab@SOP-1163:~$ cat .chrome-remote-desktop-session 
+exec /usr/sbin/lightdm-session "cinnamon-session-cinnamon"
+konglab@SOP-1163:~$ 
+
+
+
+########other untested online resources:
+To fix this, please follow these steps:
+
+Stop it:
+ /opt/google/chrome-remote-desktop/chrome-remote-desktop --stop
+
+Back it up:
+cp /opt/google/chrome-remote-desktop/chrome-remote-desktop /opt/google/chrome-remote-desktop/chrome-remote-desktop.orig
+
+Edit:  /opt/google/chrome-remote-desktop/chrome-remote-desktop
+
+Change this to the size I wanted.
+DEFAULT_SIZES = "1920x1080"
+
+Change this to desktop zero which is the console.
+FIRST_X_DISPLAY_NUMBER = 0
+
+Comment this out so it doesn't increment for a new desktop.:
+#while os.path.exists(X_LOCK_FILE_TEMPLATE % display):
+#  display += 1
+
+Comment this out so that it doesn't attempt to start a new display session since the console on desktop zero is already running :
+      #logging .info("Starting %s on display :%d" % (xvfb, display))
+      #screen_option = "%dx%dx24" % (max_width, max_height)
+      #self .x_proc = subprocess.Popen(
+     #    [xvfb, ":%d" % display,
+     #     "-auth", x_auth_file,
+     #     "-nolisten", "tcp",
+     #     "-noreset",
+     #     "-screen", "0", screen_option
+     #    ] + extra_x_args)
+      #if not self.x_proc.pid:
+     #  raise Exception("Could not start Xvfb.")
+
+Start it:
+ /opt/google/chrome-remote-desktop/chrome-remote-desktop --start
+
+DONE.  Now it attaches to Unity's existing X Server on display :0.﻿
+
+
+
+#2
+Setting the resolution of the virtual desktop
+By default, the system will create a virtual desktop that is 3840x1600 pixels in size. To change this, add this line to your ~/.profile script:
+
+export CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=1600x1200
+
+(replacing 1600x1200 with your preferred size).
+
+If the session is already running, you will need to restart it for this setting to take effect:
+
+sudo /etc/init.d/chrome-remote-desktop stop
+
+sudo /etc/init.d/chrome-remote-desktop start
+
+Cheers,
+Sarah
+
+
+
+##3
+Hello All,
+
+We are excited to announce official Linux support in Chrome Remote Desktop with step-by-step directions provided in our Help Center article linked here. You can find instructions under Set up Chrome Remote Desktop > Enable remote access > Linux (Beta).
+
+Take a look below for some helpful tips and basic troubleshooting recommendations from the development team to make the most of your Chrome Remote Desktop experience on Linux! 
+
+Setting the resolution of the virtual desktop: By default, the system will create a virtual desktop that is 1600x1200 pixels in size. To change this, add this line to your ~/.profile script:
+
+export CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=1024x768
+
+If the session is already running, you will need to restart it for this setting to take effect:
+
+sudo /etc/init.d/chrome-remote-desktop stop
+sudo /etc/init.d/chrome-remote-desktop start
+
+
+Having Trouble?
+
+1. Running Chrome in the virtual session
+The virtual session is set up so that, when you run Chrome from within the virtual session, it will be set up with a new profile. This is done because Chrome does not support using multiple X displays within the same profile. You can use Chrome Sync to synchronize your bookmarks and other settings within the virtual session.
+
+2. Viewing the host service logs
+The virtual desktop is created by the system init.d service “chrome-remote-desktop”. This service is started from the web-app when you enable remote connections. Each time this service runs, it creates a log file named /tmp/chrome_remote_desktop_... (the suffix contains a timestamp and a random string).
+
+If the service fails to start (or only runs for a short while), this might be because the session is not properly configured. If this occurs, take a look at the log file.
+
+If you have questions, please feel free to post in a new thread so someone from the Chrome team can assist you!!!
+
+
+
+
