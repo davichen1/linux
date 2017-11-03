@@ -1,0 +1,12 @@
+#How to mount tmpfs:
+# mkdir -p /mnt/tmp  #Or /media/ramd
+# mount -t tmpfs -o size=2048m tmpfs /mnt/tmp   #Or /media/ramd
+
+#How to mount ramfs:
+# mkdir -p /mnt/ram  #Or /media/ramd
+# mount -t ramfs -o size=2048m ramfs /mnt/ram    #Or /media/ramd
+
+#
+Primarily both ramfs and tmpfs do the same thing with some differences. Ramfs will grow dynamically. But when it goes above total RAM size, the system may hang, because RAM is full, and can't keep any more data. Tmpfs will not grow dynamically. It would not allow you to write more than the size you’ve specified while mounting the tmpfs.
+
+Tmpfs uses swap, where as Ramfs doesn't.
