@@ -1,0 +1,8 @@
+
+#how to mount smb folder
+install cifs-util first
+
+
+sudo mount -t cifs -o username=abc,password=efg,uid=$USER,gid=$USER //sop-1489/documents-1489/ /mnt/documents-1489
+
+sudo mount -t cifs -o username=abc,password=efg,uid=$USER,gid=$USER //172.17.15.24/documents-1489/ /mnt/documents-1489
